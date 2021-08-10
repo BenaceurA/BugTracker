@@ -10,13 +10,44 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.vue$/,
+                test: /\.vue$/i,
                 loader: 'vue-loader',
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
-            }
+                use: [
+                    "style-loader",
+                    {
+                        loader:"css-loader",
+                        options:{
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader:"postcss-loader",
+                        options: {
+                            postcssOptions:{
+                                plugins:{
+                                    tailwindcss : {},
+                                    autoprefixer : {}
+                                }
+                            }
+                        }
+                    }
+                ],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                use: [
+                  {
+                    loader: 'file-loader',
+                    options:{
+                        name:'/img/[name].[ext]'
+                    }
+                  },
+                ],
+            },
+
         ]
     },
     plugins: [
@@ -31,5 +62,6 @@ module.exports = {
           'vue$': 'vue/dist/vue.esm-bundler.js'
         },  
     },
+    // devtool : false,
     target:'electron-renderer',
 }

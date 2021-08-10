@@ -1,16 +1,16 @@
 <template>
-      <div class="titlebar">
-        <div class="titlebar-controls">
-            <div @click="minimizeApp" class="titlebar-minimize">
+    <div class="titlebar bg-black flex justify-end">
+        <div class="titlebar-controls flex">
+            <div @click="minimizeApp" class="titlebar-minimize hover:bg-white hover:bg-opacity-20">
                 <svg x="0px" y="0px" viewBox="0 0 10 1">
                     <rect fill="#ffffff" width="10" height="1"></rect>
                 </svg>
             </div>
-            <div @click="resizeApp" class="titlebar-resize">
-                <svg v-if="!maximized" class="fullscreen-svg" x="0px" y="0px" viewBox="0 0 10 10">
+            <div @click="resizeApp" class="titlebar-resize hover:bg-white hover:bg-opacity-20">
+                <svg v-if="!maximized" class="fullscreen-svg " x="0px" y="0px" viewBox="0 0 10 10">
                     <path fill="#ffffff" d="M 0 0 L 0 10 L 10 10 L 10 0 L 0 0 z M 1 1 L 9 1 L 9 9 L 1 9 L 1 1 z " />
                 </svg>
-                <svg v-if="maximized" class="maximize-svg" x="0px" y="0px" viewBox="0 0 10 10">
+                <svg v-if="maximized" class="maximize-svg " x="0px" y="0px" viewBox="0 0 10 10">
                     <mask id="Mask">
                         <rect fill="#FFFFFF" width="10" height="10"></rect>
                         <path fill="#000000" d="M 3 1 L 9 1 L 9 7 L 8 7 L 8 2 L 3 2 L 3 1 z" />
@@ -20,7 +20,7 @@
                         mask="url(#Mask)" />
                 </svg>
             </div>
-            <div @click="quitApp" class="titlebar-close">
+            <div @click="quitApp" class="titlebar-close hover:bg-red hover:bg-opacity-90">
                 <svg x="0px" y="0px" viewBox="0 0 10 10">
                     <polygon fill="#ffffff" points="10,1 9,0 5,4 1,0 0,1 4,5 0,9 1,10 5,6 9,10 10,9 6,5"></polygon>
                 </svg>
@@ -34,6 +34,7 @@ const electron = require("electron");
 const {ipcRenderer} = electron;
 
 export default {
+    name : "TitleBar",
     data(){
         return{
             maximized : false
@@ -64,20 +65,21 @@ export default {
 
 <style>
 .titlebar{
-    display: flex;
+    /* display: flex;
     justify-content: flex-end;
-    background-color: black;
+    background-color: black; */
     -webkit-app-region: drag;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
 }
 .titlebar-controls{
-    display: flex;
+    /* display: flex; */
     -webkit-app-region: no-drag;
 }
 
 .titlebar-minimize ,
-.maximize-svg ,
-.fullscreen-svg ,
+/* .maximize-svg ,
+.fullscreen-svg , */
+.titlebar-resize,
 .titlebar-close{
     padding: 12px 18px;
 }
@@ -85,12 +87,13 @@ export default {
 .titlebar-close:hover{
     background-color: rgba(232, 17, 35, 0.9);
 }
-.titlebar-minimize:hover,
+
+/* .titlebar-minimize:hover,
 .titlebar-resize:hover,
 .titlebar-fullscreen:hover
 {
     background-color: rgba(255, 255, 255, 0.2);
-}
+} */
 
 .titlebar-minimize svg,
 .titlebar-resize svg.maximize-svg,

@@ -1,15 +1,15 @@
 <template>
-    <titlebar></titlebar>
-    <router></router>
+  <div class="h-screen flex flex-col">
+    <Router></Router>
+  </div>  
 </template>
 
 <script>
-import titlebar from "./title-bar.vue"
-import router from "./router.vue"
+import Router from "./router.vue"
 export default {
+  name:"Main",
   components: {
-    titlebar,
-    router
+    Router
   },
 };
 </script>

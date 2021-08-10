@@ -1,4 +1,4 @@
 let vue = require("vue");
-import main from "./main.vue"
-
-vue.createSSRApp(main).mount('#app');
+import Main from "./main.vue"
+import "./style.css"
+vue.createApp(Main).mount('#app');
