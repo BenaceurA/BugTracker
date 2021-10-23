@@ -27,6 +27,7 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
+    "mongoose": "^5.13.7",
     "vue": "^3.1.5"
   }
 }

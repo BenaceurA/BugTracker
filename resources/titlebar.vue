@@ -1,5 +1,47 @@
 <template>
-    <div class="titlebar bg-black flex justify-end">
+    <div class="titlebar bg-black flex justify-between">
+
+        <div class="menu flex">
+            <div v-on:click="$emit('emitBACK')" v-if="vue == 'Issues'" class="pt-1 px-2 h-full cursor-pointer hover:bg-white hover:bg-opacity-20">
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path fill="#ffffff" d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"/>
+                </svg>
+            </div>
+            <div v-if="vue == 'Issues'" class="flex">
+                <div v-on:click="showAddIssue = !showAddIssue" title="Add new project" class="add cursor-pointer h-full pt-2 px-2  hover:bg-white hover:bg-opacity-20">
+                <!-- <svg width="20" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                        <path transform="scale(-1, 1) translate(-24, 0)" fill="#ffffff" d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"/>
+                </svg> -->
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#ffffff" d="M8 8v-8h1v8h8v1h-8v8h-1v-8h-8v-1h8z"/>
+                </svg>
+                </div>
+                <div v-if="showAddIssue == true" class="h-full flex">
+                    <input v-model="issueName" class="shadow appearance-none h-full px-3 text-gray-700 focus:outline-none focus:shadow-outline" id="add" placeholder="Issue title" type="text"> 
+                    <button v-on:click="$emit('emitAddIssue',issueName); showAddIssue = !showAddIssue; issueName =''" class="bg-white text-white bg-opacity-20 px-2">Add Issue</button>
+                </div>
+            </div>
+            <div v-if="vue == 'Projects'" class="flex">
+                <div v-on:click="showAddProject = !showAddProject" title="Add new project" class="add cursor-pointer h-full pt-2 px-2  hover:bg-white hover:bg-opacity-20">
+                <!-- <svg width="20" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                        <path transform="scale(-1, 1) translate(-24, 0)" fill="#ffffff" d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"/>
+                </svg> -->
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#ffffff" d="M8 8v-8h1v8h8v1h-8v8h-1v-8h-8v-1h8z"/>
+                </svg>
+                </div>
+                <div v-if="showAddProject == true" class="h-full flex">
+                    <input v-model="projectName" class="shadow appearance-none h-full px-3 text-gray-700 focus:outline-none focus:shadow-outline" id="add" placeholder="Project name" type="text"> 
+                    <button v-on:click="$emit('emitAddProject',projectName); showAddProject = !showAddProject; projectName =''" class="bg-white text-white bg-opacity-20 px-2">Add Project</button>
+                </div>
+            </div>
+            
+        </div>      
+
+        <div class="select-none absolute text-gray-200 left-1/2 -translate-x-1/2 text-sm pt-2">
+            {{vue}}
+        </div>
+
         <div class="titlebar-controls flex">
             <div @click="minimizeApp" class="titlebar-minimize hover:bg-white hover:bg-opacity-20">
                 <svg x="0px" y="0px" viewBox="0 0 10 1">
@@ -35,9 +77,14 @@ const {ipcRenderer} = electron;
 
 export default {
     name : "TitleBar",
+    props : ["vue"],
     data(){
         return{
-            maximized : false
+            showAddProject:false,
+            showAddIssue:false,
+            maximized : false,
+            projectName : "",
+            issueName : ""
         }
     },
     methods : {
@@ -50,7 +97,7 @@ export default {
         },
         minimizeApp(){
             ipcRenderer.send("app:minimize");
-        }
+        },
     },
     created : function () {
         ipcRenderer.on("app:maximize",()=>{
@@ -59,6 +106,7 @@ export default {
         ipcRenderer.on("app:unmaximize",()=>{
             this.maximized = false;
         });
+        
     }
 }
 </script>
@@ -71,6 +119,7 @@ export default {
     -webkit-app-region: drag;
     /* -webkit-user-select: none; */
 }
+.menu,
 .titlebar-controls{
     /* display: flex; */
     -webkit-app-region: no-drag;
@@ -104,6 +153,5 @@ export default {
     height: 10px;
     shape-rendering: crispEdges;
 }
-
 
 </style>
